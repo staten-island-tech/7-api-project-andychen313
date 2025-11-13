@@ -15,4 +15,4 @@ def getPoke(poke):
     }
 
 pokemon = getPoke("Bulbasaur")
-print(pokemon)
+print(pokemon['types'])
