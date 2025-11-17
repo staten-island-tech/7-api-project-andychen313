@@ -14,10 +14,28 @@ def getPoke(poke):
         "types": [t["type"]["name"] for t in data["types"]]
     }
 
-pokemon = getPoke("Bulbasaur")
-print(pokemon['types']) """
+pokemon = getPoke("Pikachu")
+print(pokemon['types'],['weight']) """
 
-import tkinter as tk
+import requests
+def getPoke(poke):
+    requests.get("https://pokeapi.co/api/v2/pokemon/ditto")
+    response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
+    if response.status_code != 200:
+        print("Error fetching data!")
+        return None
+    
+    data = response.json()
+    return {
+        "name": data["name"],
+        "height": data["height"],
+        "weight": data["weight"],
+        "types": [t["type"]["name"] for t in data["types"]]
+    }
+pokemon = 
+for key, value in pokemon.items()
+
+""" import tkinter as tk
 
 window = tk.Tk()
 window.title("Pokemon Data")
@@ -32,4 +50,4 @@ result_label.pack(pady=15)
 def pokemon_data():
     text = entry.get()
     
-window.mainloop()
+window.mainloop() """
