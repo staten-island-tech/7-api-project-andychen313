@@ -32,8 +32,9 @@ def getPoke(poke):
         "weight": data["weight"],
         "types": [t["type"]["name"] for t in data["types"]]
     }
-pokemon = 
-for key, value in pokemon.items()
+pokemon = getPoke("Pikachu")
+for key, value in pokemon.items():
+    
 
 """ import tkinter as tk
 
