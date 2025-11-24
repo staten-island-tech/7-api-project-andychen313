@@ -17,7 +17,7 @@ def getPoke(poke):
 pokemon = getPoke("Pikachu")
 print(pokemon['types'],['weight']) """
 
-import requests
+""" import requests
 def getPoke(poke):
     requests.get("https://pokeapi.co/api/v2/pokemon/ditto")
     response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
@@ -32,11 +32,11 @@ def getPoke(poke):
         "weight": data["weight"],
         "types": [t["type"]["name"] for t in data["types"]]
     }
-pokemon = getPoke("Pikachu")
+pokemon = getPoke("Raichu")
 for key, value in pokemon.items():
-    
+    print(f"{key.title()}: {value}") """
 
-""" import tkinter as tk
+import tkinter as tk
 
 window = tk.Tk()
 window.title("Pokemon Data")
@@ -50,5 +50,6 @@ result_label = tk.Label(window, text="", font=("Times New Roman", 14, "bold"), f
 result_label.pack(pady=15)
 def pokemon_data():
     text = entry.get()
+    print()
     
-window.mainloop() """
+window.mainloop()
