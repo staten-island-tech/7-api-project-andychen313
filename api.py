@@ -39,7 +39,7 @@ for key, value in pokemon.items():
 import tkinter as tk
 
 window = tk.Tk()
-window.title("Pokemon Data")
+window.title("Reverse Message")
 window.geometry("400x250")
 window.resizable(False, False)
 prompt=tk.Label(window, text = "Type your message below: ", font = ("Times New Roman", 14))
@@ -48,8 +48,9 @@ entry = tk.Entry(window, font = ("Times New Roman", 14), width = 30)
 entry.pack(pady=5)
 result_label = tk.Label(window, text="", font=("Times New Roman", 14, "bold"), fg="blue")
 result_label.pack(pady=15)
-def pokemon_data():
+def reverse_message():
     text = entry.get()
-    print()
+    reversed_text = text[::-1]
+    result_label.config(text=f"Backwards: {reversed_text}")
     
 window.mainloop()
