@@ -36,7 +36,7 @@ pokemon = getPoke("Raichu")
 for key, value in pokemon.items():
     print(f"{key.title()}: {value}") """
 
-import tkinter as tk
+""" import tkinter as tk
 
 window = tk.Tk()
 window.title("Reverse Message")
@@ -52,5 +52,26 @@ def reverse_message():
     text = entry.get()
     reversed_text = text[::-1]
     result_label.config(text=f"Backwards: {reversed_text}")
+reverse_button = tk.Button(window, text="Reverse Message!", font = ("Times New Roman", 14), command=reverse_message)
+reverse_button.pack(pady=10)
     
-window.mainloop()
+window.mainloop() """
+
+import tkinter as tk
+import requests
+import threading
+
+def receive_api_data(onepiece):
+    try:
+        requests.get("https://api.api-onepiece.com/v2/fruits/en")
+        response = requests.get(f"https://api.api-onepiece.com/v2/fruits/en/{onepiece.lower()}")
+        data = response.text
+        update_label(data)
+    except Exception as e:
+        update_label(f"Error: {e}")
+
+def update_label(text):
+    label.config(text = text)
+
+def button():
+    
