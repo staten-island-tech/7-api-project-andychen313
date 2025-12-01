@@ -57,21 +57,33 @@ reverse_button.pack(pady=10)
     
 window.mainloop() """
 
+""" from logging import root """
 import tkinter as tk
 import requests
 import threading
 
-def receive_api_data(onepiece):
+def receive_api_data(poke):
     try:
-        requests.get("https://api.api-onepiece.com/v2/fruits/en")
-        response = requests.get(f"https://api.api-onepiece.com/v2/fruits/en/{onepiece.lower()}")
-        data = response.text
+        requests.get("https://pokeapi.co/api/v2/pokemon")
+        response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
+        if response.status_code != 200:
+            update_label("Error fetching data!")
+            return None
+        data = response.json()
         update_label(data)
     except Exception as e:
         update_label(f"Error: {e}")
 
-def update_label(text):
+def update_label( text):
     label.config(text = text)
 
 def button():
-    
+    threading.Thread(target=receive_api_data, args=("pikachu",), daemon=True).start()
+
+root = tk.Tk()
+root.title("Pokemon API Data")
+label = tk.Label(root, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
+label.pack(pady=20)
+button_fetch = tk.Button(root, text = "Fetch Pokemon Data", font = ("Times New Roman", 14), command = button)
+button_fetch.pack()
+root.mainloop()
