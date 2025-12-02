@@ -17,25 +17,6 @@ def getPoke(poke):
 pokemon = getPoke("Pikachu")
 print(pokemon['types'],['weight']) """
 
-""" import requests
-def getPoke(poke):
-    requests.get("https://pokeapi.co/api/v2/pokemon/ditto")
-    response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
-    if response.status_code != 200:
-        print("Error fetching data!")
-        return None
-    
-    data = response.json()
-    return {
-        "name": data["name"],
-        "height": data["height"],
-        "weight": data["weight"],
-        "types": [t["type"]["name"] for t in data["types"]]
-    }
-pokemon = getPoke("Raichu")
-for key, value in pokemon.items():
-    print(f"{key.title()}: {value}") """
-
 """ import tkinter as tk
 
 window = tk.Tk()
@@ -61,38 +42,6 @@ window.mainloop() """
 import tkinter as tk
 import requests
 import threading
-
-""" def receive_api_data(poke):
-    try:
-        requests.get("")
-        response = requests.get()
-        if response.status_code != 200:
-            update_label("Error fetching data!")
-            return None
-        data = response.json()
-        update_label(data)
-    except Exception as e:
-        update_label(f"Error: {e}")
-        return {
-        "name": data["name"],
-        "height": data["height"],
-        "weight": data["weight"],
-        "types": [t["type"]["name"] for t in data["types"]]
-        }
-
-def update_label( text):
-    label.config(text = text)
-
-def button():
-    threading.Thread(target=receive_api_data, args=("p",), daemon=True).start()
-
-root = tk.Tk()
-root.title()
-label = tk.Label(root, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
-label.pack(pady=20)
-button_fetch = tk.Button(root, text = "", font = ("Times New Roman", 14), command = button)
-button_fetch.pack()
-root.mainloop() """
 
 def receive_api_data():
     try:
