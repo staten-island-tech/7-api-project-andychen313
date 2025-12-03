@@ -78,17 +78,38 @@ window.mainloop() """
 
 import tkinter as tk
 import requests
+import threading
 
 def receive_api_data():
-    requests.get("https://api-nba-v1.p.rapidapi.com/leagues/")
-    response = requests.get("https://api-nba-v1.p.rapidapi.com/leagues/")
-    if response.status_code != 200:
-        print("Error fetching data!")
-        return None
+    try:
+        requests.get("https://api-sports.io/documentation/nba/v2")
+        response = requests.get("https://api-nba-v1.p.rapidapi.com/seasons/")
+        if response.status_code != 200:
+            update_label("Error fetching data!")
+            return None
+        data = response.json()
+        update_label(data)
+    except Exception as e:
+        update_label(f"Error: {e}")
+        return {
+            "results": data["results"],
+            "seasons"
+        }
+
+def update_label(text):
+    label.config(text = text)
+
+def button():
+    threading.Thread(target=receive_api_data, args=("38242",), daemon=True).start()
+
+window = tk.Tk()
+window.title("Fun Fact Generator")
+window.geometry("400x250")
+label = tk.Label(window, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
+label.pack(pady=20)
+result_label = tk.Label(window, text="Fact: ", font=("Times New Roman", 14, "bold"), fg="blue")
+result_label.pack(pady=15)
+button_fetch = tk.Button(window, text = "Press to fetch facts!", font = ("Times New Roman", 14), command = button)
+button_fetch.pack()
+window.mainloop() """
     
-    data = response.json()
-    return {
-        "api": data["api"]
-    }
-results = receive_api_data("api")
-print(results)
