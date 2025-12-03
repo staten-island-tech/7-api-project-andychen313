@@ -82,34 +82,26 @@ import threading
 
 def receive_api_data():
     try:
-        requests.get("https://api-sports.io/documentation/nba/v2")
-        response = requests.get("https://api-nba-v1.p.rapidapi.com/seasons/")
+        response = requests.get("https://holidays.abstractapi.com/v1/")
         if response.status_code != 200:
             update_label("Error fetching data!")
             return None
-        data = response.json()
+        data =response.text
         update_label(data)
     except Exception as e:
         update_label(f"Error: {e}")
-        return {
-            "results": data["results"],
-            "seasons"
-        }
-
+    
 def update_label(text):
     label.config(text = text)
 
 def button():
-    threading.Thread(target=receive_api_data, args=("38242",), daemon=True).start()
+    threading.Thread(target=receive_api_data, daemon=True).start()
 
-window = tk.Tk()
-window.title("Fun Fact Generator")
-window.geometry("400x250")
-label = tk.Label(window, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
+root = tk.Tk()
+root.title("Public Holiday Generator")
+root.geometry("400x250")
+label = tk.Label(root, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
 label.pack(pady=20)
-result_label = tk.Label(window, text="Fact: ", font=("Times New Roman", 14, "bold"), fg="blue")
-result_label.pack(pady=15)
-button_fetch = tk.Button(window, text = "Press to fetch facts!", font = ("Times New Roman", 14), command = button)
+button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
 button_fetch.pack()
-window.mainloop() """
-    
+root.mainloop()
