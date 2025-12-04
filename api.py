@@ -80,28 +80,60 @@ import tkinter as tk
 import requests
 import threading
 
-def receive_api_data():
+def receive_api_data(country, year, month, day):
     try:
-        response = requests.get("https://holidays.abstractapi.com/v1/")
+        url = f"https://holidays.abstractapi.com/v1/"
+        paramaters = {
+            "country": country,
+            "year": year,
+            "month": month,
+            "day": day,
+        }
+        response = requests.get(url, params=paramaters)
         if response.status_code != 200:
             update_label("Error fetching data!")
             return None
-        data =response.text
+        data = response.json()
+        if not data:
+            update_label("Sorry! No holidays found for the given date!")
         update_label(data)
     except Exception as e:
         update_label(f"Error: {e}")
     
 def update_label(text):
-    label.config(text = text)
+    result_label.config(text = text)
 
 def button():
-    threading.Thread(target=receive_api_data, daemon=True).start()
+    country = entry_country.get().strip().upper()
+    year = entry_year.get().strip()
+    month = entry_month.get().strip()
+    day = entry_day.get().strip()
+    
+    threading.Thread(target=receive_api_data, args=(country, year, month, day,), daemon=True).start()
 
 root = tk.Tk()
 root.title("Public Holiday Generator")
 root.geometry("400x250")
-label = tk.Label(root, text = "Click the button to fetch data.", font = ("Times New Roman", 14), wraplength = 300)
-label.pack(pady=20)
+label = tk.Label(root, text = "Country:", font = ("Times New Roman", 14), wraplength = 300)
+entry_country = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label.pack(pady = 5)
+entry_country.pack(pady = 5)
+label_year = tk.Label(root, text = "Year:", font = ("Times New Roman", 14), wraplength = 300)
+entry_year = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_year.pack(pady = 10)
+entry_year.pack(pady = 5)
+label_month = tk.Label(root, text = "Month:", font = ("Times New Roman", 14), wraplength = 300)
+entry_month = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_month.pack(pady = 10)
+entry_month.pack(pady = 5)
+label_day = tk.Label(root, text = "Day:", font = ("Times New Roman", 14), wraplength = 300)
+entry_day = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_day.pack(pady = 10)
+entry_day.pack(pady = 5)
+result_label = tk.Label(root, text = "Holiday Data: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
+result_label.pack(pady = 15)
+
+
 button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
 button_fetch.pack()
 root.mainloop()
