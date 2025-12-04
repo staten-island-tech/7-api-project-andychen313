@@ -29,3 +29,5 @@ class User:
     def get_age(self):
         return 19
     
+#creating classes
+#instantiating classess interacting with objects

@@ -76,26 +76,26 @@ button_fetch = tk.Button(window, text = "Press to fetch facts!", font = ("Times 
 button_fetch.pack()
 window.mainloop() """
 
-import tkinter as tk
+""" import tkinter as tk
 import requests
 import threading
 
-def receive_api_data(country, year, month, day):
+def receive_api_data(anime_id, anime_name):
     try:
-        url = f"https://holidays.abstractapi.com/v1/"
+        url = "https://anime-facts-rest-api.herokuapp.com/api/v1"
         paramaters = {
-            "country": country,
-            "year": year,
-            "month": month,
-            "day": day,
+
+            "anime_id": anime_id,
+            "anime_name": anime_name,
         }
-        response = requests.get(url, params=paramaters)
+
+        response = requests.get(url, paramaters)
         if response.status_code != 200:
             update_label("Error fetching data!")
             return None
         data = response.json()
         if not data:
-            update_label("Sorry! No holidays found for the given date!")
+            update_label("Sorry! No anime found!")
         update_label(data)
     except Exception as e:
         update_label(f"Error: {e}")
@@ -104,33 +104,61 @@ def update_label(text):
     result_label.config(text = text)
 
 def button():
-    country = entry_country.get().strip().upper()
-    year = entry_year.get().strip()
-    month = entry_month.get().strip()
-    day = entry_day.get().strip()
+    anime_id = entry_anime_id.get()
+    anime_name = entry_name.get().strip().upper()
     
-    threading.Thread(target=receive_api_data, args=(country, year, month, day,), daemon=True).start()
+    threading.Thread(target=receive_api_data, args=(anime_id, anime_name,), daemon=True).start()
 
 root = tk.Tk()
-root.title("Public Holiday Generator")
-root.geometry("400x250")
-label = tk.Label(root, text = "Country:", font = ("Times New Roman", 14), wraplength = 300)
-entry_country = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label.pack(pady = 5)
-entry_country.pack(pady = 5)
-label_year = tk.Label(root, text = "Year:", font = ("Times New Roman", 14), wraplength = 300)
-entry_year = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_year.pack(pady = 10)
-entry_year.pack(pady = 5)
-label_month = tk.Label(root, text = "Month:", font = ("Times New Roman", 14), wraplength = 300)
-entry_month = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_month.pack(pady = 10)
-entry_month.pack(pady = 5)
-label_day = tk.Label(root, text = "Day:", font = ("Times New Roman", 14), wraplength = 300)
-entry_day = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_day.pack(pady = 10)
-entry_day.pack(pady = 5)
-result_label = tk.Label(root, text = "Holiday Data: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
+root.title("Anime Finder")
+root.geometry("900x600")
+label_anime_id = tk.Label(root, text = "Anime ID: (Put in the number that accommodates the anime)", font = ("Times New Roman", 14), wraplength = 300)
+entry_anime_id = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_anime_id.pack(pady = 5)
+entry_anime_id.pack(pady = 5)
+label_name = tk.Label(root, text = "Anime: ", font = ("Times New Roman", 14), wraplength = 300)
+entry_name = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_name.pack(pady = 10)
+entry_name.pack(pady = 5)
+result_label = tk.Label(root, text = "Anime Found: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
+result_label.pack(pady = 15)
+
+
+button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
+button_fetch.pack()
+root.mainloop() """
+
+import tkinter as tk
+import requests
+
+def receive_api_data(anime):
+        response = requests.get(f"https://anime-facts-rest-api.herokuapp.com/api/v1{anime.lower()}")
+        if response.status_code != 200:
+            print("Error fetching data!")
+            return None
+        
+        data = response.json()
+        return {
+             "anime_id": data["anime_id"],
+             "anime_name": data["anime_name"],
+        }
+
+def button():
+    anime_id = entry_anime_id.get()
+    anime_name = entry_name.get().strip().upper()
+
+root = tk.Tk()
+root.title("Anime Finder")
+root.geometry("900x600")
+label_anime_id = tk.Label(root, text = "Anime ID: (Put in the number that accommodates the anime)", font = ("Times New Roman", 14), wraplength = 300)
+entry_anime_id = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_anime_id.pack(pady = 5)
+entry_anime_id.pack(pady = 5)
+label_name = tk.Label(root, text = "Anime: ", font = ("Times New Roman", 14), wraplength = 300)
+entry_name = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_name.pack(pady = 10)
+entry_name.pack(pady = 5)
+result_label = tk.Label(root, text = "Anime Found: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
 result_label.pack(pady = 15)
 
 
