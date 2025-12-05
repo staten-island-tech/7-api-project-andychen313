@@ -128,11 +128,11 @@ button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("T
 button_fetch.pack()
 root.mainloop() """
 
-import tkinter as tk
+""" import tkinter as tk """
 import requests
 
 def receive_api_data(anime):
-        response = requests.get(f"https://anime-facts-rest-api.herokuapp.com/api/v1{anime.lower()}")
+        response = requests.get(f"https://superheroapi.com/api/id/4c794d344a3a0ca616c41956c26f8640{anime.lower()}")
         if response.status_code != 200:
             print("Error fetching data!")
             return None
@@ -142,11 +142,13 @@ def receive_api_data(anime):
              "anime_id": data["anime_id"],
              "anime_name": data["anime_name"],
         }
+anime = receive_api_data("1")
+print(anime)
 
-def button():
+""" def button():
     anime_id = entry_anime_id.get()
     anime_name = entry_name.get().strip().upper()
-
+    
 root = tk.Tk()
 root.title("Anime Finder")
 root.geometry("900x600")
@@ -164,4 +166,4 @@ result_label.pack(pady = 15)
 
 button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
 button_fetch.pack()
-root.mainloop()
+root.mainloop() """
