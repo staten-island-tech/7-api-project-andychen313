@@ -131,19 +131,20 @@ root.mainloop() """
 """ import tkinter as tk """
 import requests
 
-def receive_api_data(anime):
-        response = requests.get(f"https://superheroapi.com/api/id/4c794d344a3a0ca616c41956c26f8640{anime.lower()}")
+def receive_api_data(recipes):
+        requests.get("https://api.spoonacular.com/recipes/complexSearch/?apiKey=54e529620ef14a63a2d110e02e9fc901")
+        response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch{recipes.lower()}")
         if response.status_code != 200:
             print("Error fetching data!")
             return None
         
         data = response.json()
         return {
-             "anime_id": data["anime_id"],
-             "anime_name": data["anime_name"],
+             "id": data["id"],
+             "title": data["title"],
         }
-anime = receive_api_data("1")
-print(anime)
+Recipes = receive_api_data("715415")
+print(data['id']['title'])
 
 """ def button():
     anime_id = entry_anime_id.get()
