@@ -128,35 +128,33 @@ button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("T
 button_fetch.pack()
 root.mainloop() """
 
-""" import tkinter as tk """
+import tkinter as tk
 import requests
 
-def receive_api_data(recipes):
-        requests.get("https://api.spoonacular.com/recipes/complexSearch/?apiKey=54e529620ef14a63a2d110e02e9fc901")
-        response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch{recipes.lower()}")
+def receive_api_data(fruits):
+        requests.get("https://www.fruityvice.com/api/fruit/strawberry")
+        response = requests.get(f"https://www.fruityvice.com/api/fruit/{fruits.lower()}")
         if response.status_code != 200:
             print("Error fetching data!")
             return None
         
         data = response.json()
-        return {
-             "id": data["id"],
-             "title": data["title"],
-        }
-Recipes = receive_api_data("715415")
-print(data['id']['title'])
+        return data
 
-""" def button():
-    anime_id = entry_anime_id.get()
-    anime_name = entry_name.get().strip().upper()
+Fruit = receive_api_data("6")
+print(Fruit)
+
+def button():
+    fruit_id = entry_id.get().strip
+    fruit_name = entry_name.get().strip().lower()
     
 root = tk.Tk()
 root.title("Anime Finder")
 root.geometry("900x600")
-label_anime_id = tk.Label(root, text = "Anime ID: (Put in the number that accommodates the anime)", font = ("Times New Roman", 14), wraplength = 300)
-entry_anime_id = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_anime_id.pack(pady = 5)
-entry_anime_id.pack(pady = 5)
+label_fruit_id = tk.Label(root, text = "Anime ID: (Put in the number that accommodates the anime)", font = ("Times New Roman", 14), wraplength = 300)
+entry_id = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
+label_fruit_id.pack(pady = 5)
+entry_fruit_id.pack(pady = 5)
 label_name = tk.Label(root, text = "Anime: ", font = ("Times New Roman", 14), wraplength = 300)
 entry_name = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
 label_name.pack(pady = 10)
@@ -167,4 +165,4 @@ result_label.pack(pady = 15)
 
 button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
 button_fetch.pack()
-root.mainloop() """
+root.mainloop()
