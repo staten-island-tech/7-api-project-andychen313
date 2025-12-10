@@ -130,39 +130,37 @@ root.mainloop() """
 
 import tkinter as tk
 import requests
+import threading
 
 def receive_api_data(fruits):
+    try:
         requests.get("https://www.fruityvice.com/api/fruit/strawberry")
         response = requests.get(f"https://www.fruityvice.com/api/fruit/{fruits.lower()}")
-        if response.status_code != 200:
-            print("Error fetching data!")
-            return None
-        
+
         data = response.json()
-        return data
+        
+        update_label(data)
+    except Exception as e:
+        update_label(f"Error: {e}")
 
-Fruit = receive_api_data("6")
-print(Fruit)
+def update_label(text):
+    label.config(text=text)
 
-def button():
-    fruit_id = entry_id.get().strip
+def button_activation():
     fruit_name = entry_name.get().strip().lower()
+    threading.Thread(target=receive_api_data, args=(fruit_name,), daemon=True).start()
     
 root = tk.Tk()
-root.title("Anime Finder")
+root.title("Fruit Data")
 root.geometry("900x600")
-label_fruit_id = tk.Label(root, text = "Anime ID: (Put in the number that accommodates the anime)", font = ("Times New Roman", 14), wraplength = 300)
-entry_id = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_fruit_id.pack(pady = 5)
-entry_fruit_id.pack(pady = 5)
-label_name = tk.Label(root, text = "Anime: ", font = ("Times New Roman", 14), wraplength = 300)
+label = tk.Label(root, text = "Fruit: ", font = ("Times New Roman", 14), wraplength = 200)
 entry_name = tk.Entry(root, font = ("Times New Roman", 14), width = 10)
-label_name.pack(pady = 10)
+label.pack(pady = 10)
 entry_name.pack(pady = 5)
-result_label = tk.Label(root, text = "Anime Found: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
+result_label = tk.Label(root, text = "Fruit Found: ", font = ("Times New Roman", 14, "bold"), fg = "blue")
 result_label.pack(pady = 15)
 
 
-button_fetch = tk.Button(root, text = "Press to fetch holiday data!", font = ("Times New Roman", 14), command = button)
+button_fetch = tk.Button(root, text = "Press to fetch fruit data!", font = ("Times New Roman", 14), command = button_activation)
 button_fetch.pack()
 root.mainloop()
