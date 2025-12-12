@@ -149,7 +149,7 @@ def update_label(text):
 def button_activation():
     fruit_name = entry_name.get().strip().lower()
     threading.Thread(target=receive_api_data, args=(fruit_name,), daemon=True).start()
-    
+
 root = tk.Tk()
 root.title("Fruit Data")
 root.geometry("900x600")
