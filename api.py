@@ -17,7 +17,7 @@ def getPoke(poke):
 pokemon = getPoke("Pikachu")
 print(pokemon['types'],['weight']) """
 
-""" import tkinter as tk
+import tkinter as tk
 import requests
 import threading
 
@@ -52,12 +52,4 @@ entry_name.pack(pady = 5)
 
 button_fetch = tk.Button(root, text = "Press to fetch fruit data!", font = ("Comic Sans", 14), bg = "black", fg = "white", command = button_activation)
 button_fetch.pack(pady = 30)
-root.mainloop() """
-
-import requests
-import tkinter as tk
-def receive_api_data(fruits):
-    requests.get("https://www.fruityvice.com/api/fruit/all")
-    response = requests.get(f"https://www.fruityvice.com/api/fruit/{fruits.lower()}")
-
-    data = 
+root.mainloop()
